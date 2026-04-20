@@ -1,0 +1,12 @@
+services:
+  warp:
+    network_mode: host
+    container_name: cf-warp
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    volumes:
+      - ./warp-data:/var/lib/cloudflare-warp
+    restart: always
+    image: hmaktub/warp:latest
