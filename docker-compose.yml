@@ -8,5 +8,6 @@ services:
       - /dev/net/tun:/dev/net/tun
     volumes:
       - ./warp-data:/var/lib/cloudflare-warp
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
     restart: always
     image: hmaktub/warp:latest
