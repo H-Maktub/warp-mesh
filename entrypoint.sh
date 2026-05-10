@@ -3,6 +3,14 @@ set -e
 
 echo "[warp] container starting..."
 
+mkdir -p /run/dbus
+# 如果 machine-id 不存在，先生成
+if [ ! -s /etc/machine-id ]; then
+    dbus-uuidgen > /etc/machine-id
+fi
+# 启动 system bus
+dbus-daemon --system --fork
+
 mkdir -p /var/lib/cloudflare-warp
 
 if [ ! -c /dev/net/tun ]; then
