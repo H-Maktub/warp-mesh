@@ -3,6 +3,19 @@ set -e
 
 echo "[warp] container starting..."
 
+cleanup() {
+  exit_code=$?
+  echo "[warp] deleting nft table cloudflare-warp..."
+  if command -v nft >/dev/null 2>&1; then
+    nft list table inet cloudflare-warp >/dev/null 2>&1 && \
+      nft delete table inet cloudflare-warp || true
+  fi
+  echo "[warp] cleanup done"
+  exit "$exit_code"
+}
+
+trap cleanup EXIT INT TERM
+
 mkdir -p /run/dbus
 # 如果 machine-id 不存在，先生成
 if [ ! -s /etc/machine-id ]; then
