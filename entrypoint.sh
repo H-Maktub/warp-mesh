@@ -13,8 +13,9 @@ cleanup() {
 
 trap cleanup EXIT INT TERM
 
-rm -f /run/dbus/pid
+
 mkdir -p /run/dbus
+rm -f /run/dbus/pid
 # 如果 machine-id 不存在，先生成
 if [ ! -s /etc/machine-id ]; then
     dbus-uuidgen > /etc/machine-id
